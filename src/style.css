@@ -27,20 +27,22 @@ button:disabled { cursor: default; }
 @keyframes rise { from { transform: translate(-50%, 150px); } to { transform: translate(-50%, calc(-100vh - 180px)); } }
 @keyframes sway { from { rotate: -6deg; } to { rotate: 6deg; } }
 @keyframes burst { 0% { opacity: 1; transform: rotate(var(--angle)) translateY(-5px) scale(1); } 100% { opacity: 0; transform: rotate(var(--angle)) translateY(-48px) scale(.2); } }
-.toolbar { position: relative; z-index: 3; max-width: 1000px; margin: 0 auto; padding: 32px 40px 26px; display: flex; justify-content: space-between; align-items: center; }
-.home-mark { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; color: #222; }
-.home-mark svg { width: 19px; height: 28px; fill: none; stroke: currentColor; stroke-width: 1.15; }
-.navigation { position: relative; }
-.menu-toggle { position: relative; width: 44px; height: 44px; border: 1px solid #ccc; border-radius: 50%; background: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px; }
-.menu-toggle span { width: 16px; height: 1px; background: #222; transition: transform .2s; }
+.toolbar { position: relative; z-index: 3; max-width: 1000px; margin: 0 auto; padding: 32px 40px 26px; display: flex; justify-content: flex-end; align-items: center; min-height: 102px; }
+.home-mark { display: none; align-items: center; justify-content: center; width: 44px; height: 44px; color: #222; }
+.home-mark img { display: block; width: 22px; height: 22px; }
+.mobile-navigation { display: none; position: relative; }
+.desktop-navigation { display: flex; align-items: center; gap: 30px; min-height: 44px; }
+.desktop-navigation a { font-size: 13px; text-decoration: none; padding: 10px 0; color: #777; }
+.desktop-navigation a:hover, .desktop-navigation a[aria-current='page'] { color: #222; }
+.desktop-navigation a[aria-current='page'] { text-decoration: underline; text-decoration-thickness: 1px; }
+.menu-toggle { position: relative; width: 44px; height: 44px; padding: 0; border: 1px solid #ccc; border-radius: 50%; background: #fff; display: flex; justify-content: center; align-items: center; }
+.menu-toggle img { display: block; width: 22px; height: 22px; }
 .menu-toggle:hover { border-color: #222; }
-.menu-toggle.is-open span:first-child { transform: translateY(3.5px) rotate(45deg); }
-.menu-toggle.is-open span:last-child { transform: translateY(-3.5px) rotate(-45deg); }
-nav { position: absolute; right: 0; top: 57px; width: 250px; padding: 20px 24px; background: #fff; box-shadow: 0 10px 50px #0002; }
-nav a { display: flex; justify-content: space-between; text-decoration: none; font-size: 20px; padding: 14px 0; border-bottom: 1px solid #e2e0dc; }
-nav a span { font-size: 11px; color: #8a8884; }
-nav a[aria-current] { font-weight: 600; }
-nav p { font-size: 11px; color: #7a7772; margin: 23px 0 4px; }
+.mobile-navigation nav { position: absolute; right: 0; top: 57px; width: 250px; padding: 20px 24px; background: #fff; box-shadow: 0 10px 50px #0002; }
+.mobile-navigation nav a { display: flex; justify-content: space-between; text-decoration: none; font-size: 20px; padding: 14px 0; border-bottom: 1px solid #e2e0dc; }
+.mobile-navigation nav a span { font-size: 11px; color: #8a8884; }
+.mobile-navigation nav a[aria-current] { font-weight: 600; }
+.mobile-navigation nav p { font-size: 11px; color: #7a7772; margin: 23px 0 4px; }
 .reading-column { position: relative; z-index: 1; max-width: 1000px; margin: 0 auto; padding: 12px 40px 30px; pointer-events: none; }
 .reading-column > * { pointer-events: auto; }
 .paper { background: #e9e9e9; padding: 64px clamp(28px, 6vw, 86px) 40px; margin-bottom: 28px; min-height: 350px; }
@@ -87,8 +89,14 @@ h1 { font-family: 'Manrope', 'DM Sans', sans-serif; font-size: clamp(28px, 4vw, 
 .skeleton p { font-size: 12px; color: #888; margin-top: 38px; }
 @keyframes pulse { to { opacity: .4; } }
 @media (min-width: 850px) { .post-body { max-width: 68ch; } }
+@media (max-width: 767px) {
+  .toolbar { justify-content: space-between; }
+  .home-mark { display: inline-flex; }
+  .mobile-navigation { display: block; }
+  .desktop-navigation { display: none; }
+}
 @media (max-width: 600px) {
-  .toolbar { padding: 20px 23px 18px; }
+  .toolbar { padding: 20px 23px 18px; min-height: 82px; }
   .reading-column { padding: 8px 24px 24px; }
   .paper { padding: 36px 25px 28px; margin-bottom: 22px; }
   h1 { letter-spacing: -1px; margin: 20px 0 26px; }

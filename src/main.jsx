@@ -94,6 +94,12 @@ function Navigation({ route }) {
   const toggle = useRef(null);
   useEffect(() => setOpen(false), [route]);
   useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 768px)');
+    const closeOnDesktop = (event) => { if (event.matches) setOpen(false); };
+    desktop.addEventListener('change', closeOnDesktop);
+    return () => desktop.removeEventListener('change', closeOnDesktop);
+  }, []);
+  useEffect(() => {
     if (!open) return;
     const dismiss = (event) => {
       if (event.type === 'keydown' && event.key === 'Escape') { setOpen(false); toggle.current?.focus(); }
@@ -104,9 +110,10 @@ function Navigation({ route }) {
     return () => { document.removeEventListener('keydown', dismiss); document.removeEventListener('pointerdown', dismiss); };
   }, [open]);
   return <header className="toolbar">
-    <a className="home-mark" href="#/" aria-label="Blog home"><svg viewBox="0 0 24 32" aria-hidden="true"><ellipse cx="12" cy="11" rx="8" ry="10"/><path d="m12 21-2 3h4m-2 0c-4 4 4 4 0 7"/></svg></a>
-    <div className="navigation" ref={container}>
-      <button ref={toggle} className={`menu-toggle ${open ? 'is-open' : ''}`} aria-label={open ? 'Close menu' : 'Open menu'} aria-expanded={open} aria-controls="navigation" onClick={() => setOpen(!open)}><span /><span /></button>
+    <a className="home-mark" href="#/" aria-label="Blog home" onClick={() => setOpen(false)}><img src="/icons/house.svg" width="22" height="22" alt="" aria-hidden="true" /></a>
+    <nav className="desktop-navigation" aria-label="Main navigation"><a href="#/" aria-current={route === '/' ? 'page' : undefined}>Blog</a><a href="#/contact" aria-current={route === '/contact' ? 'page' : undefined}>Contact</a></nav>
+    <div className="mobile-navigation" ref={container}>
+      <button ref={toggle} className="menu-toggle" aria-label={open ? 'Close menu' : 'Open menu'} aria-expanded={open} aria-controls="navigation" onClick={() => setOpen(!open)}><img src={open ? '/icons/x.svg' : '/icons/menu.svg'} width="22" height="22" alt="" aria-hidden="true" /></button>
       {open && <nav id="navigation" aria-label="Main navigation"><a href="#/" aria-current={route === '/' ? 'page' : undefined} onClick={() => setOpen(false)}>Blog <span>01</span></a><a href="#/contact" aria-current={route === '/contact' ? 'page' : undefined} onClick={() => setOpen(false)}>Contact <span>02</span></a><p>A little corner of the internet.</p></nav>}
     </div>
   </header>;

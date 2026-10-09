@@ -32,3 +32,9 @@ Live posts come from the blog's public JSONP feed (no API key required), five at
 The contact page links to Blogspot until an actual contact address is supplied. No contact form or email address is invented. The page title lives in the HTML head; it isn't shown on the page.
 
 The layout stops growing at 1000px. Solid grey cards cover the balloons and clouds behind them. Balloons respond to click/tap outside the cards, and sky animations stop when reduced motion is enabled.
+
+## Icons
+
+The home, menu, and close SVGs are from [Lucide](https://lucide.dev/icons/house), stored locally in `public/icons/`. Their ISC and applicable Feather MIT licence notices are retained in `public/icons/LICENSE.txt`.
+
+Below 768px, navigation shows the home icon and hamburger menu. At 768px and above, it shows Blog and Contact as direct text links.
